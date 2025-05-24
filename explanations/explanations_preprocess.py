@@ -1,7 +1,7 @@
 import numpy as np
 from string import punctuation
 import gensim.downloader as api
-from nltk import word_tokenize, pos_tag
+from nltk import pos_tag
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 from lime.explanation import Explanation
@@ -75,7 +75,7 @@ def create_embeddings(explanations_token_weights: list[tuple[str, np.float64]]):
         for key, weight in sentence:
             try:
                 sentence_embedding += gensim_model.get_vector(key) * weight
-            except KeyError as err:
+            except KeyError:
                 if "-" in key:
                     keys = [item for item in key.split("-") if item]
                     try:
@@ -83,14 +83,14 @@ def create_embeddings(explanations_token_weights: list[tuple[str, np.float64]]):
                             sentence_embedding += (
                                 gensim_model.get_vector(composite_key) * weight
                             )
-                    except KeyError as err:
+                    except KeyError:
                         continue
                 elif "'" in key:
                     try:
                         sentence_embedding += (
                             gensim_model.get_vector(key.strip("'")) * weight
                         )
-                    except KeyError as err:
+                    except KeyError:
                         continue
                 else:
                     continue

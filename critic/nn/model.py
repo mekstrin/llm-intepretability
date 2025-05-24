@@ -1,4 +1,3 @@
-from keras.saving import load_model
 from keras.layers import Dense, Dropout, BatchNormalization
 from keras import Sequential
 

@@ -1,8 +1,6 @@
 import numpy as np
 import torch
 from transformers import Trainer
-from lime.lime_text import LimeTextExplainer
-from lime.explanation import Explanation
 from torch import nn
 from explanations.explanations_eval import eval_explanations
 from explanations.explanations_preprocess import (
@@ -10,6 +8,8 @@ from explanations.explanations_preprocess import (
     preprocess_explanation,
     get_token_weights,
 )
+from critic.nn.model import nn_model
+from critic.catboost.model import catboost_model
 
 
 class ExplanationsTrainer(Trainer):

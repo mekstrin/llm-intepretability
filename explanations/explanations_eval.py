@@ -1,6 +1,6 @@
 from lime.lime_text import LimeTextExplainer
 from lime.explanation import Explanation
-from utils import split_expression
+from utils import split_expression, get_probabilities
 
 class_names = ["contradiction", "entailment", "neutral"]
 lime_explainer = LimeTextExplainer(
@@ -18,7 +18,7 @@ def eval_explanations(model, tokenizer, inputs, num_samples=100) -> list[Explana
         )
         explanation = lime_explainer.explain_instance(
             fixed_sentence,
-            lambda value: get_probabilities(model, value),
+            lambda value: get_probabilities(model, tokenizer, value),
             num_samples=num_samples,
             num_features=len(split_expression(fixed_sentence)),
             top_labels=len(class_names),
