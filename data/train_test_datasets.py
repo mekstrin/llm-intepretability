@@ -11,6 +11,29 @@ mnli_train_size = 392702
 train_size = 50_000
 
 
+def make_test_set_cose(size, seed=42):
+    dataset = datasets.load_dataset("cos_e", "v1.11")["validation"]
+
+    random.seed(seed)
+    random_indices = random.sample(list(range(len(dataset["question"]))), size)
+
+    test_set = dataset[random_indices]
+    candidate_labels_list = test_set["choices"]
+
+    true_labels = [
+        test_set["choices"][i].index(test_set["answer"][i]) for i in range(size)
+    ]
+
+    return {
+        "question": test_set["question"],
+        "choices": test_set["choices"],
+        "answer": test_set["answer"],
+        "true_labels": true_labels,
+        "extractive_explanation": test_set["extractive_explanation"],
+        "candidate_labels_list": candidate_labels_list,
+    }
+
+
 def make_test_set_mnli(size, seed=42):
     dataset = datasets.load_dataset("multi_nli", split="validation_matched")
 
