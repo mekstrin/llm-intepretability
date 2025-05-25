@@ -31,11 +31,11 @@ def get_probabilities(model, tokenizer, sentence_pairs):
     return probs
 
 
-def get_predictions(model, sentence_pairs):
+def get_predictions(model, tokenizer, sentence_pairs):
     """
     Returns list of indices corresponding to the predicted lables.
     """
-    probs = get_probabilities(model, sentence_pairs)
+    probs = get_probabilities(model, tokenizer, sentence_pairs)
 
     return [np.argmax(prob) for prob in probs]
 

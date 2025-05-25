@@ -67,6 +67,7 @@ def evaluate_model(model_path, model_name, datasets, num_batches=1000):
         batch_size = esnli_size // num_batches
         prediction_batch = get_predictions(
             classifier,
+            tokenizer,
             dataset_esnli["sentence_pairs"][i * batch_size : (i + 1) * batch_size],
         )
         predictions_esnli += prediction_batch
@@ -84,6 +85,7 @@ def evaluate_model(model_path, model_name, datasets, num_batches=1000):
         batch_size = mnli_size // num_batches
         prediction_batch = get_predictions(
             classifier,
+            tokenizer,
             dataset_mnli["sentence_pairs"][i * batch_size : (i + 1) * batch_size],
         )
         predictions_mnli += prediction_batch
